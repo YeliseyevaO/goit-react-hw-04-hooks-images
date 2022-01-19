@@ -39,7 +39,7 @@ function App() {
       } catch (error) {
         setError({ error });
       } finally {
-        this.setState({ isLoading: false });
+        setIsLoading(false);
       }
     };
     getImages();
@@ -54,10 +54,10 @@ function App() {
   };
 
   const shouldRenderLoadMoreButton = photoList.length > 0 && !isLoading;
-  const { largeImageURL, tags } = activePhoto;
+  /*const { largeImageURL, tags } = activePhoto;*/
   return (
     <>
-      <Searchbar onSubmit={setPhotoName(photoName)} />
+      <Searchbar onSubmit={() => setPhotoName(photoName)} />
       <ImageGallery
         gallery={photoList}
         onClose={toggleModal}
@@ -67,9 +67,7 @@ function App() {
       {shouldRenderLoadMoreButton && (
         <Button foundMore={setCurrentPage((currentPage) => currentPage + 1)} />
       )}
-      {showModal && (
-        <Modal onClose={toggleModal} crs={largeImageURL} alt={tags} />
-      )}
+      {showModal && <Modal onClose={toggleModal} photo={activePhoto} />}
     </>
   );
 }
