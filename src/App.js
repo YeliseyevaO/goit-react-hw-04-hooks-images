@@ -31,6 +31,7 @@ function App() {
     if (photoName === "") {
       return;
     }
+    setPhotoList([]);
     setIsLoading(true);
     const getImages = async () => {
       try {
@@ -38,7 +39,6 @@ function App() {
         setPhotoList((photoList) => [...photoList, ...images]);
       } catch (error) {
         setError({ error });
-      } finally {
         setIsLoading(false);
       }
     };
@@ -54,10 +54,10 @@ function App() {
   };
 
   const shouldRenderLoadMoreButton = photoList.length > 0 && !isLoading;
-  /*const { largeImageURL, tags } = activePhoto;*/
+  const { largeImageURL, tags } = activePhoto;
   return (
     <>
-      <Searchbar onSubmit={() => setPhotoName(photoName)} />
+      <Searchbar onSubmit={setPhotoName} />
       <ImageGallery
         gallery={photoList}
         onClose={toggleModal}
@@ -67,7 +67,9 @@ function App() {
       {shouldRenderLoadMoreButton && (
         <Button foundMore={setCurrentPage((currentPage) => currentPage + 1)} />
       )}
-      {showModal && <Modal onClose={toggleModal} photo={activePhoto} />}
+      {showModal && (
+        <Modal onClose={toggleModal} src={largeImageURL} alt={tags} />
+      )}
     </>
   );
 }
