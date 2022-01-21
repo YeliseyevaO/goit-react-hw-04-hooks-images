@@ -37,6 +37,7 @@ function App() {
       try {
         const images = await fetchPhoto(photoName, currentPage);
         setPhotoList((photoList) => [...photoList, ...images]);
+        setIsLoading(false);
       } catch (error) {
         setError({ error });
         setIsLoading(false);
@@ -57,7 +58,7 @@ function App() {
   const { largeImageURL, tags } = activePhoto;
   return (
     <>
-      <Searchbar onSubmit={setPhotoName} />
+      <Searchbar onSubmit={setPhotoName} changePage={setCurrentPage} />
       <ImageGallery
         gallery={photoList}
         onClose={toggleModal}

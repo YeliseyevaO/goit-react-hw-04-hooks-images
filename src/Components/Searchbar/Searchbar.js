@@ -3,7 +3,7 @@ import { useState } from "react";
 import "./Searchbar.css";
 import PropTypes from "prop-types";
 
-function Searchbar({ onSubmit }) {
+function Searchbar({ onSubmit, changePage }) {
   const [query, setQuery] = useState("");
 
   const handleChange = (e) => {
@@ -14,6 +14,7 @@ function Searchbar({ onSubmit }) {
     e.preventDefault();
 
     onSubmit(query);
+    changePage(1);
     setQuery("");
   };
   return (
